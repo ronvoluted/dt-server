@@ -35,7 +35,7 @@ const openid: RequestHandler = async ({ params, url }) => {
 	// 	inputParams,
 	// });
 
-	return redirect(307, platformUrl.href);
+	throw redirect(302, platformUrl.href);
 };
 
 export const GET = openid;
