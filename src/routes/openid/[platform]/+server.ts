@@ -1,6 +1,6 @@
 import type { RequestHandler } from '../$types';
 
-import { json } from '@sveltejs/kit';
+import { json, redirect } from '@sveltejs/kit';
 import { entriesToObject } from '$lib//utility';
 
 const openid: RequestHandler = async ({ params, url }) => {
@@ -29,11 +29,13 @@ const openid: RequestHandler = async ({ params, url }) => {
 
 	console.log({ atomaJoinUrl: platformUrl.href });
 
-	return json({
-		platformUrl: platformUrl,
-		Authorization: `${params.platform} ${platformUrl}`,
-		inputParams,
-	});
+	// return json({
+	// 	platformUrl: platformUrl,
+	// 	Authorization: `${params.platform} ${platformUrl}`,
+	// 	inputParams,
+	// });
+
+	return redirect(307, platformUrl.href);
 };
 
 export const GET = openid;
