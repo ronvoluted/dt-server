@@ -1,20 +1,13 @@
-import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-const prettyPrint = (input: unknown): string => {
-	return JSON.stringify(input, null, 2);
-}
+import { json } from '@sveltejs/kit';
+import { entriesToObject } from '$lib//utility';
 
 const forward: RequestHandler = async ({ platform, request, url }) => {
-	const headers = [...request.headers].reduce<Record<string, unknown>>((obj, header) => {
-		obj[header[0]] = header[1];
-		return obj;
-	}, {});
-
 	const input = {
 		method: request.method,
-		url: url,
-		headers,
+		url,
+		headers: entriesToObject(request.headers),
 		redirectCount: request.redirectCount,
 		taintedOrigin: request.taintedOrigin,
 		platform: platform,
